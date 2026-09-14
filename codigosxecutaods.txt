@@ -3,3 +3,5 @@ npm install
 ssh-keygen.exe
 
 npm run dev
+
+Utilizar o lucide.dev para pegar os ícones → npm install lucide-react
