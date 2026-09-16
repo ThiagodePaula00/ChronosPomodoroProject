@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { initialTaskState } from "./initialTaskState";
+import { TaskContext } from "./TaslContext";
 
 type TaskContextProviderProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export function TaskContextProvider({ children }: TaskContextProviderProps) {
@@ -13,4 +14,4 @@ export function TaskContextProvider({ children }: TaskContextProviderProps) {
       {children}
     </TaskContext.Provider>
   );
-}
+} 
