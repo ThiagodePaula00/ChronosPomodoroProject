@@ -49,11 +49,12 @@ export function MainForm() {
                 activeTask: newTask,
                 currentCycle: nextCycle,
                 secondsRemaining,
-                formattedSecondsReamining: formatSecondsToMinutes(secondsRemaining),
+                formattedSecondsRemaining: formatSecondsToMinutes(secondsRemaining),
                 tasks: [...prevState.tasks, newTask],
             };
         });
     };
+
     
     return (
         <form onSubmit={handleCreateNewTask} className='form' action="">
@@ -65,7 +66,7 @@ export function MainForm() {
             <p>Próximo intervalo é de 25min</p>
         </div>
 
-        {state.currentCycle === 0 && (
+        {state.currentCycle > 0 && (
         <div className="formRow">
             <Cycles />
         </div>
