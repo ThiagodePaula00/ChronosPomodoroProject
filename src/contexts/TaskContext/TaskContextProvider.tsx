@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { initialTaskState } from "./initialTaskState";
-import { TaskContext } from "./TaslContext";
+import { TaskContext } from "./TaskContext";
 
 type TaskContextProviderProps = {
   children: ReactNode;
