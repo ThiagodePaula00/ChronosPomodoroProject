@@ -14,4 +14,4 @@ export function TaskContextProvider({ children }: TaskContextProviderProps) {
       {children}
     </TaskContext.Provider>
   );
-} 
+}
