@@ -17,7 +17,7 @@ export class TimerWorkerManager {
         return instance
     }
 
-    postMessage(message: TaskStateModel) {
+    postMessage(message: Pick<TaskStateModel, 'activeTask' | 'secondsRemaining'>) {
         this.worker.postMessage(message);
     }
 
