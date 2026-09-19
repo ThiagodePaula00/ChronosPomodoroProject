@@ -17,6 +17,12 @@ export function TaskContextProvider({ children }: TaskContextProviderProps) {
   const playBeepRef = useRef<() => void | null >(null);
 
   useEffect(() => {
+    if (activeTask) {
+      document.title = `${state.formattedSecondsRemaining} - Chronos Pomodoro`;
+    }
+  }, [activeTask, state.formattedSecondsRemaining]);
+
+  useEffect(() => {
     if (!activeTask) {
       return;
     }
