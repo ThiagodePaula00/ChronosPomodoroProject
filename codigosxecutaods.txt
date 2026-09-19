@@ -11,3 +11,5 @@ react toastify (as mensagens).
 npm install react-toastify
 
 npm i react-router
+
+npm i date-fns
