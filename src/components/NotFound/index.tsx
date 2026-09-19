@@ -7,7 +7,7 @@ export function NotFound() {
 return (
 <MainTemplate>
 <Container>
-        <h1>Página não encontrada</h1>
+        <Heading>Página não encontrada</Heading>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia, at
           et reiciendis eos ipsum earum? Dolorum incidunt, sit veniam repellat
