@@ -3,3 +3,13 @@ npm install
 ssh-keygen.exe
 
 npm run dev
+
+Utilizar o lucide.dev para pegar os ícones → npm install lucide-react
+
+react toastify (as mensagens).
+
+npm install react-toastify
+
+npm i react-router
+
+npm i date-fns
