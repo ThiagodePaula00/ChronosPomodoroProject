@@ -11,8 +11,8 @@ import { formatDate } from '../../components/utils/formatDate';
 import { getTaskStatus } from '../../components/utils/getTaskStatus';
 import { sortTasks, type SortTasksOptions } from '../../components/utils/sortTasks';
 import { useMemo, useState } from 'react';
+import { showMessage } from '../../adapters/showMessage';
 import { TaskActionTypes } from '../../contexts/TaskContext/taskActions';
-import { toast } from 'react-toastify';
 
 export function History() {
     const { state, dispatch } = useTaskContext();
@@ -43,16 +43,11 @@ export function History() {
     }
 
   function handleDeleteAllHistory() {
-    toast.dismiss();
-    toast('grterg', {
-      autoClose: false,
-      closeOnClick: false,
-      closeButton: false,
-      draggable: false,
-    });
+    showMessage.confirm('Tem certeza?', confirmation => {
+      if (!confirmation) return;
 
-      if(!confirm('Tem certeza?')) return
-      dispatch({ type: TaskActionTypes.RESET_STATE});
+      dispatch({ type: TaskActionTypes.RESET_STATE });
+    });
   }
 
   return (
