@@ -3,8 +3,13 @@ import { MainTemplate } from "../../templates/MainTemplate";
 import { Container } from "../Container";
 import { Heading } from "../Heading";
 import { RouterLink } from "../RouterLink";
+import { useEffect } from "react";
 
 export function AboutPomodoro() {
+  useEffect(() => {
+    document.title = 'Entenda a Técnica Pomodoro';
+  }, []);
+  
   return (
     <MainTemplate>
       <Container>

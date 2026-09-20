@@ -10,7 +10,7 @@ import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 import { formatDate } from '../../components/utils/formatDate';
 import { getTaskStatus } from '../../components/utils/getTaskStatus';
 import { sortTasks, type SortTasksOptions } from '../../components/utils/sortTasks';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { showMessage } from '../../adapters/showMessage';
 import { TaskActionTypes } from '../../contexts/TaskContext/taskActions';
 
@@ -49,6 +49,10 @@ export function History() {
       dispatch({ type: TaskActionTypes.RESET_STATE });
     });
   }
+
+    useEffect(() => {
+    document.title = 'Histórico - Chronos Pomodoro';
+  }, []);
 
   return (
     <MainTemplate>
