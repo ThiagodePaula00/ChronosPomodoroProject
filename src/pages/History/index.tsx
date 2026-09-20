@@ -10,31 +10,49 @@ import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 import { formatDate } from '../../components/utils/formatDate';
 import { getTaskStatus } from '../../components/utils/getTaskStatus';
 import { sortTasks, type SortTasksOptions } from '../../components/utils/sortTasks';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { TaskActionTypes } from '../../contexts/TaskContext/taskActions';
+import { toast } from 'react-toastify';
 
 export function History() {
-    const { state } = useTaskContext();
-    const [ sortedTasksOptions, setSortTaskOptions] = useState<SortTasksOptions<(typeof state.tasks)[number]>>(
-        () => {
-        return {
-            tasks: sortTasks({ tasks: state.tasks }),
-            field: 'startDate',
-            direction: 'desc',
-        };
+    const { state, dispatch } = useTaskContext();
+    const hasTasks = state.tasks.length > 0;
+
+    const [sortedTasksOptions, setSortTaskOptions] = useState<Pick<SortTasksOptions<(typeof state.tasks)[number]>, 'field' | 'direction'>>({
+      field: 'startDate',
+      direction: 'desc',
     });
+
+    const sortedTasks = useMemo(
+      () => sortTasks({
+        tasks: state.tasks,
+        direction: sortedTasksOptions.direction,
+        field: sortedTasksOptions.field,
+      }),
+      [state.tasks, sortedTasksOptions.direction, sortedTasksOptions.field],
+    );
 
     function handleSortTasks({ field }: Pick<SortTasksOptions<(typeof state.tasks)[number]>, 'field'>) {
-    const newDirection = sortedTasksOptions.direction === 'desc' ? 'asc' : 'desc';
+      const newDirection = sortedTasksOptions.direction === 'desc' ? 'asc' : 'desc';
 
-    setSortTaskOptions({
-      tasks: sortTasks({
+      setSortTaskOptions((prevState) => ({
+        ...prevState,
         direction: newDirection,
-        tasks: sortedTasksOptions.tasks,
         field,
-      }),
-      direction: newDirection,
-      field,
+      }));
+    }
+
+  function handleDeleteAllHistory() {
+    toast.dismiss();
+    toast('grterg', {
+      autoClose: false,
+      closeOnClick: false,
+      closeButton: false,
+      draggable: false,
     });
+
+      if(!confirm('Tem certeza?')) return
+      dispatch({ type: TaskActionTypes.RESET_STATE});
   }
 
   return (
@@ -42,14 +60,17 @@ export function History() {
       <Container>
         <Heading>
           <span>History</span>
+          {hasTasks && (
           <span className={styles.buttonContainer}>
             <DefaultButton
               icon={<TrashIcon />}
               color='red'
               aria-label='Apagar todo o histórico'
               title='Apagar histórico'
+              onClick={handleDeleteAllHistory}
             />
           </span>
+          )}
         </Heading>
       </Container>
 
@@ -82,7 +103,7 @@ export function History() {
             </thead>
 
             <tbody>
-              {sortedTasksOptions.tasks.map((task) => {
+              {sortedTasks.map((task) => {
                 const taskTypeDictionary = {
                     workTime: 'Foco',
                     shortBreakTime: 'Descanso curto',
@@ -102,7 +123,8 @@ export function History() {
             </tbody>
           </table>
         </div>
-      </Container>
+      {!hasTasks && (<p style={{ textAlign: 'center' }}>Ainda não existem tarefas criadas</p>)}
+      </Container> 
     </MainTemplate>
   );
 }
